@@ -59,17 +59,21 @@ function getWebviewContent() {
 				<meta charset="UTF-8" />
 				<style>
 					body {}
-					#prompt {width:100%; box-sizing:border-box;}
-					#response {border:1px solid #ccc; margin-top:20px; padding:10px; min-height:100px;}
+					#responseHtml {border:1px solid #ccc; margin-top:20px; padding:24px; min-height:calc(100vh - 180px); max-height:calc(100vh - 180px); border-radius:12px; font-size:16px; line-height:24px; overflow:scroll;}
+					#prompt {width:100%; box-sizing:border-box; border:1px solid #ccc; border-radius:12px; padding:12px; height:42px; font-size:14px; line-height:20px;}
+					.message-container {display:flex;}
+					think {display:none;}
+					#askBtn {margin-left:12px; border-radius:12px; padding:12px 24px; cursor:pointer; font-size:14px; line-height:14px; box-sizing:border-box;}
 				</style>
 			</head>
 			<body>
-				<h2>Deep VS Code Extension</h2>
-				<textarea id="prompt" rows="3" placeholder="Ask me something..."></textarea>
+				<h2>DeepSeek VSCode Extension</h2>
+				<div id="responseHtml"></div>
 				<br/>
-				<button id="askBtn">Ask</button>
-				<div id="response"></div>
-
+				<div class="message-container">
+					<textarea id="prompt" rows="3" placeholder="Ask me something..."></textarea>
+					<button id="askBtn">Ask</button>
+				</div>
 				<script>
 					const vscode = acquireVsCodeApi();
 
@@ -82,7 +86,7 @@ function getWebviewContent() {
 						const {command, text} = event.data
 
 						if (command === 'chatResponse') {
-							document.getElementById('response').innerText = text
+							document.getElementById('responseHtml').innerHTML = text
 						}
 					})
 				</script>
